@@ -1,5 +1,6 @@
 <template>
   <v-app dark>
+    <span class="bg"></span>
     <v-navigation-drawer
       v-model="drawer"
       :mini-variant="miniVariant"
@@ -48,13 +49,26 @@
   </v-app>
 </template>
 
+<style scoped>
+.bg {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: url("https://cdn.pixabay.com/photo/2016/03/26/13/09/organic-1280537_1280.jpg")
+    no-repeat center center;
+  background-size: cover;
+  background-color: red;
+}
+</style>
 <script>
 export default {
   name: 'DefaultLayout',
   data () {
     return {
       clipped: false,
-      drawer: false,
+      drawer: true,
       fixed: false,
       items: [
         {
