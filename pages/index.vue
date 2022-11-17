@@ -1,6 +1,6 @@
 <template>
   <v-container align-content="stretch">
-      <DataTable :items="dummyItems" />
+      <DataTable :items="items" />
   </v-container>
 </template>
 
@@ -11,25 +11,37 @@ export default {
   components:{DataTable},
   data(){
     return{
-            dummyItems : [
-                {
-                    date : "2022/11/12 13:12:32",
-                    UserID : "e13498",
-                    diff : 4,
-                },
-                {
-                    date : "2022/11/12 14:25:10",
-                    UserID : "Unknown",
-                    diff : 1,
-                },
-
-                {
-                    date : "2022/11/12 14:56:50",
-                    UserID : "e13498",
-                    diff : 2,
-                }
-            ]
+            items:[],
     }
+  },
+  methods: {
+    LoadTableData: async function(){
+      await this.$axios.get(this.$config.apiURL +"get_inventory",{
+        headers:{"content-type":"application/x-www-form-urlencoded"}
+      })
+      .then((response)=>{
+        response.data.body.forEach(item =>{
+          var datetime = item[0]
+          var id = item[1]
+          var num = item[2]
+          this.$store.commit("table/addTableItem", {dateTime:datetime,id:id,num:num});
+        });
+        this.items = this.$store.getters["table/getTableData"];
+      })
+      .catch((error)=>{
+        if (error.response)
+        {
+          console.log(error.response.data);
+          console.log(error.response.status);
+          console.log(error.response.statusText);
+          console.log(error.response.headers);
+        }
+      })
+    }
+  },
+
+  created(){
+    this.LoadTableData();
   }
 }
 </script>

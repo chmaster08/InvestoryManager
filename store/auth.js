@@ -13,7 +13,7 @@ export default {
     mutations : {
         setToken(state, newtoken) {
             state.token = newtoken;
-        }
+        },
     },
     
 

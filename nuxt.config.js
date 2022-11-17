@@ -19,6 +19,10 @@ export default {
     ]
   },
 
+  publicRuntimeConfig:{
+    apiURL : process.env.API_URL,
+  },
+
   router : {
     middleware : ["auth"],
   },
@@ -42,6 +46,8 @@ export default {
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
+    "@nuxtjs/axios",
+    "node-rsa"
   ],
 
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
