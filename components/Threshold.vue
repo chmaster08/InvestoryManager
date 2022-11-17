@@ -4,10 +4,10 @@
         <v-card-text class="mx-15">
             <v-row>
                 <v-col >
-                    <v-text-field maxlength="3" class="shrink mx-10"></v-text-field>
+                    <v-text-field maxlength="3" class="shrink mx-10" :value="threshold" @input="$emit('update:threshold', $event)"></v-text-field>
                 </v-col>
                 <v-col>
-                    <v-btn color="primary" class="ml-n5">Save</v-btn>
+                    <v-btn color="primary" @click="save" class="ml-n5 d-flex align-center">Save</v-btn>
                 </v-col>
             </v-row>
         </v-card-text>
@@ -15,3 +15,21 @@
 </template>
 <style scoped>
 </style>
+<script>
+export default{
+    props:{
+        threshold : {
+            type:Number,
+            default:50,
+            require:true,
+        }
+    },
+    methods:
+    {
+        save()
+        {
+            this.$emit("savethreshold", this.threshold);
+        }
+    }
+}
+</script>

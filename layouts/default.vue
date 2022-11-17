@@ -72,13 +72,13 @@ export default {
       fixed: false,
       items: [
         {
-          icon: 'mdi-apps',
-          title: 'Table',
+          icon: 'mdi-table',
+          title: '台帳',
           to: '/'
         },
         {
-          icon: 'mdi-chart-bubble',
-          title: 'Settings',
+          icon: 'mdi-cog',
+          title: '設定',
           to: '/Settings'
         }
       ],

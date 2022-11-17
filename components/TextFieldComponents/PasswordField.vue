@@ -17,11 +17,10 @@ export default {
             default : "",
             required : true,
         },
-    },
-    data(){
-        return{
-            show : false,
-        };
+        show:{
+            type : Boolean,
+            default:false,
+        }
     },
 };
 </script>
