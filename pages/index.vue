@@ -44,6 +44,7 @@ export default {
   },
 
   created(){
+    clearInterval(this.timerID);
     this.LoadTableData();
     this.timerID = setInterval(() => this.LoadTableData(), 10000);
   }
