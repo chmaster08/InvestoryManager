@@ -12,6 +12,10 @@ export default {
         addTableItem(state,{dateTime, id, num})
         {
             state.tableData.push({date:dateTime,UserID: id,diff:num});
+        },
+        clearTableItems(state)
+        {
+            state.tableData.splice(0);
         }
     },
     

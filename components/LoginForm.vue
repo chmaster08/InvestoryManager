@@ -18,12 +18,14 @@ export default {
     data(){
         return {
             password:"",
+            pubkey:"",
         };
     },
     methods: {
         submit(){
             if (this.password.length > 0 && this.password == "AAAA")
             {
+                this.login();
                 this.$store.commit("auth/setToken", this.password);
                 console.log(this.$store.getters["auth/dispToken"]);
                 this.$router.push("/");
@@ -32,7 +34,37 @@ export default {
             {
                 this.password = "";
             }
+        },
+
+        getPubkey : async function(){
+
+      await this.$axios.get(this.$config.apiURL +"get_pubkey",{
+        headers:{"content-type":"application/x-www-form-urlencoded"}
+      })
+      .then((response)=>{
+        this.pubkey = response.data.body;
+      })
+      .catch((error)=>{
+        if (error.response)
+        {
+          console.log(error.response.data);
+          console.log(error.response.status);
+          console.log(error.response.statusText);
+          console.log(error.response.headers);
+        }
+      })
+        },
+
+        login(){
+            const encypt = require("node-rsa");
+            var bufkey = Buffer.from(this.pubkey);
+
         }
     },
+
+    mounted()
+    {
+        this.getPubkey();
+    }
 }
 </script>
