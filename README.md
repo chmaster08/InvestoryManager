@@ -1,5 +1,14 @@
 # InvestoryManager
 
+1. git cloneする
+1. InventryManager/下に.envファイルを作成し、以下を記載
+```bash
+API_ADD = {api_server.py起動した際に表示されるIpアドレス : Port}
+```
+1. npm install　実行
+1. npm run dev　実行
+1. コマンドラインに表示されたアドレスをブラウザで表示(たぶんlocalhost:8888)
+
 ## Build Setup
 
 ```bash
