@@ -11,6 +11,7 @@ API_URL = http://192.168.10.12:8888/
 4. npm run dev　実行
 5. コマンドラインに表示されたアドレスをブラウザで表示(たぶんlocalhost:8888)
 
+以後の説明はVue/Nuxtのデフォルトのreadmeなので無視でOK
 ## Build Setup
 
 ```bash
