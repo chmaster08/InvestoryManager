@@ -3,7 +3,7 @@
 1. git cloneする
 2. InventryManager/下に.envファイルを作成し、以下を記載
 ```bash
-API_ADD = {api_server.py起動した際に表示されるIpアドレス : Port}
+API_URL = {api_server.py起動した際に表示されるIpアドレス : Port}
 ```
 3. npm install　実行
 4. npm run dev　実行
