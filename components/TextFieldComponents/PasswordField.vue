@@ -20,6 +20,10 @@ export default {
         show:{
             type : Boolean,
             default:false,
+        },
+        valid:{
+            type:Boolean,
+            default:true,
         }
     },
 };

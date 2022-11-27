@@ -19,16 +19,27 @@ export default {
         return {
             password:"",
             pubkey:"",
+            prvkey:"",
+            token:"",
+            IsInvalid : false,
         };
     },
     methods: {
-        submit(){
-            if (this.password.length > 0 && this.password == "AAAA")
+        submit  : async function(){
+            if (this.password.length > 0)
             {
-                this.login();
-                this.$store.commit("auth/setToken", this.password);
-                console.log(this.$store.getters["auth/dispToken"]);
-                this.$router.push("/");
+                await this.login();
+                console.log(this.token);
+                if (this.token.length > 0)
+                {
+                    this.$store.commit("auth/setToken", this.password);
+                    console.log(this.$store.getters["auth/dispToken"]);
+                    this.$router.push("/");
+                }
+                else
+                {
+
+                }
             }
             else
             {
@@ -54,17 +65,57 @@ export default {
         }
       })
         },
+        getPrvkey : async function(){
 
-        login(){
-            const encypt = require("node-rsa");
-            var bufkey = Buffer.from(this.pubkey);
+      await this.$axios.get(this.$config.apiURL +"get_prvkey",{
+        headers:{"content-type":"application/x-www-form-urlencoded"}
+      })
+      .then((response)=>{
+        this.prvkey = response.data.body;
+      })
+      .catch((error)=>{
+        if (error.response)
+        {
+          console.log(error.response.data);
+          console.log(error.response.status);
+          console.log(error.response.statusText);
+          console.log(error.response.headers);
+        }
+      })
+        },
+
+        login: async function(){
+
+                await this.$axios.get(this.$config.apiURL+"login?pass=" + this.password  ,{
+                    headers: { "content-type": "application/x-www-form-urlencoded" }
+                })
+                .then((response)=>{
+                    console.log("Token Request Status : " + response.status);
+                    if (response.status == 200)
+                    {
+                        console.log(response.data.body);
+                        this.token = response.data.body;
+                    }
+                    else
+                    {
+                        this.IsInvalid = true;
+                    }
+
+                })
+                .catch((error)=>
+                {
+                    if(error.response)
+                    {
+                        console.log(error.response.data);
+                        console.log(error.response.status);
+                        console.log(error.response.statusText);
+                        console.log(error.response.headers);
+
+                    }
+                    return null;
+                })
 
         }
     },
-
-    mounted()
-    {
-        this.getPubkey();
-    }
 }
 </script>

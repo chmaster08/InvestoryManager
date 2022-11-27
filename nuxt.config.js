@@ -47,7 +47,7 @@ export default {
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
     "@nuxtjs/axios",
-    "node-rsa"
+    "node-rsa",
   ],
 
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify

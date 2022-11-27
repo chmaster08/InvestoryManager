@@ -43,10 +43,18 @@ export default {
     }
   },
 
-  created(){
-    clearInterval(this.timerID);
+  mounted(){
+    console.log("mounted");
     this.LoadTableData();
-    this.timerID = setInterval(() => this.LoadTableData(), 10000);
-  }
+    var timer = this.$store.getters["table/getIntervalID"];
+    if (timer == undefined)
+    {
+      var id = setInterval(()=>this.LoadTableData(), 10000);
+      this.$store.commit("table/setIntervalID", id);
+    }
+  },
+  beforeUnmount() {
+    this.$store.commit("table/clearIntervalID");
+  },
 }
 </script>
