@@ -1,5 +1,17 @@
 # InvestoryManager
 
+1. git cloneする
+2. InventryManager/下に.envファイルを作成し、以下を記載
+```bash
+API_URL =http://{api_server.py起動した際に表示されるIpアドレス : Port}/
+#example
+API_URL = http://192.168.10.12:8888/
+```
+3. npm install　実行
+4. npm run dev　実行
+5. コマンドラインに表示されたアドレスをブラウザで表示(たぶんlocalhost:8888)
+
+以後の説明はVue/Nuxtのデフォルトのreadmeなので無視でOK
 ## Build Setup
 
 ```bash
