@@ -33,6 +33,7 @@
     </v-card>
 </template>
 <script>
+import { async } from 'q';
 import EmailField from './TextFieldComponents/EmailField.vue';
 export default{
     components : {EmailField},
@@ -50,13 +51,58 @@ export default{
         AddEmail(){
             if (this.email.length > 0 && !this.emailList.includes(this.email))
             {
-                this.emailList.push(this.email);
-                this.email="";
+                this.callAddEmailAPI(this.email);
             }
         },
         DeleteEmail(e){
-            this.emailList = this.emailList.filter(i => i != e);
-        }
-    }
+            this.callDeleteEmailAPI(e);
+        },
+
+        callDeleteEmailAPI : async function(index)
+        {
+            var email = this.emailList.filter(i => i == index);
+
+            await this.$axios.get(this.$config.apiURL + "deleteEmail?email="+email, {
+                headers: { "content-type": "application/x-www-form-urlencoded" }
+            })
+                .then((response) => {
+                    if (response.status == 200) {
+                        this.emailList = this.emailList.filter(i => i != index);
+                    }
+                    else {
+                    }
+                })
+                .catch((error) => {
+                    if (error.response) {
+                        console.log(error.response.data);
+                        console.log(error.response.status);
+                        console.log(error.response.statusText);
+                        console.log(error.response.headers);
+                    }
+                });
+
+        },
+        callAddEmailAPI : async function(email)
+        {
+            await this.$axios.get(this.$config.apiURL + "addEmail?email="+email, {
+                headers: { "content-type": "application/x-www-form-urlencoded" }
+            })
+                .then((response) => {
+                    if (response.status == 200) {
+                        this.emailList.push(this.email);
+                        this.email = "";
+                    }
+                })
+                .catch((error) => {
+                    if (error.response) {
+                        console.log(error.response.data);
+                        console.log(error.response.status);
+                        console.log(error.response.statusText);
+                        console.log(error.response.headers);
+                    }
+                });
+
+        },
+    },
 }
 </script>

@@ -20,11 +20,7 @@ export default{
 
     data(){
         return{
-            emailList :
-             [
-                "takuto.moriyasu@gmail.com",
-                "yaguchi.shacho@gmail.com",
-            ],
+            emailList :[],
             threshold : 50,
             currentPass :"",
             newPass : "",
@@ -33,7 +29,31 @@ export default{
     methods:{
         savethreshold(){
             console.log(this.threshold); 
+        },
+
+        callGetEmailList: async function(){
+
+            await this.$axios.get(this.$config.apiURL + "getEmailList", {
+                headers: { "content-type": "application/x-www-form-urlencoded" }
+            })
+                .then((response) => {
+                    response.data.body.forEach(element => {
+                        this.emailList.push(element);
+                    });
+                })
+                .catch((error) => {
+                    if (error.response) {
+                        console.log(error.response.data);
+                        console.log(error.response.status);
+                        console.log(error.response.statusText);
+                        console.log(error.response.headers);
+                    }
+                });
         }
+    },
+    created(){
+        console.log("created");
+        this.callGetEmailList();
     }
 }
 </script>
