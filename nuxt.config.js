@@ -48,6 +48,7 @@ export default {
   modules: [
     "@nuxtjs/axios",
     "node-rsa",
+    'cookie-universal-nuxt'
   ],
 
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify

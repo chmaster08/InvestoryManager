@@ -1,5 +1,10 @@
 <template>
   <v-container align-content="stretch">
+    <v-row class="mb-auto">
+      <v-btn class="ml-auto mb-2 mr-5" @click="LoadTableData" height="50" width="100">
+        <v-icon>mdi-sync</v-icon>
+      </v-btn>
+    </v-row>
       <DataTable :items="items" />
   </v-container>
 </template>
@@ -46,12 +51,6 @@ export default {
   mounted(){
     console.log("mounted");
     this.LoadTableData();
-    var timer = this.$store.getters["table/getIntervalID"];
-    if (timer == undefined)
-    {
-      var id = setInterval(()=>this.LoadTableData(), 10000);
-      this.$store.commit("table/setIntervalID", id);
-    }
   },
   beforeUnmount() {
     this.$store.commit("table/clearIntervalID");

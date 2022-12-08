@@ -13,6 +13,7 @@
 </template>
 <script>
 import PasswordField from './TextFieldComponents/PasswordField.vue';
+import Cookies, { CookieChangeOptions } from 'universal-cookie';
 export default {
     components :{PasswordField},
     data(){
@@ -33,6 +34,8 @@ export default {
                 if (this.token.length > 0)
                 {
                     this.$store.commit("auth/setToken", this.password);
+                    const cookies = new Cookies();
+                    cookies.set('ACCESS_TOKEN',this.token);
                     console.log(this.$store.getters["auth/dispToken"]);
                     this.$router.push("/");
                 }
@@ -95,6 +98,7 @@ export default {
                     {
                         console.log(response.data.body);
                         this.token = response.data.body;
+                        this.$cookies.set("token",this.token);
                     }
                     else
                     {
