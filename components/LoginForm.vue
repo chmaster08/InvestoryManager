@@ -33,7 +33,7 @@ export default {
                 console.log(this.token);
                 if (this.token.length > 0)
                 {
-                    this.$store.commit("auth/setToken", this.password);
+                    this.$store.commit("auth/setToken", this.token);
                     const cookies = new Cookies();
                     cookies.set('ACCESS_TOKEN',this.token);
                     console.log(this.$store.getters["auth/dispToken"]);

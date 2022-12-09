@@ -62,7 +62,9 @@ export default{
         {
             var email = this.emailList.filter(i => i == index);
 
-            await this.$axios.get(this.$config.apiURL + "deleteEmail?email="+email, {
+            var tokenString = "token="+this.$store.getters["auth/dispToken"];
+            var apiURL = this.$config.apiURL+"deleteEmail?" + tokenString +"&email="+email;
+            await this.$axios.get(apiURL, {
                 headers: { "content-type": "application/x-www-form-urlencoded" }
             })
                 .then((response) => {
@@ -73,6 +75,9 @@ export default{
                     }
                 })
                 .catch((error) => {
+                    if (error.response.status == 403) {
+                        this.$router.push('/login');
+                    }
                     if (error.response) {
                         console.log(error.response.data);
                         console.log(error.response.status);
@@ -84,7 +89,10 @@ export default{
         },
         callAddEmailAPI : async function(email)
         {
-            await this.$axios.get(this.$config.apiURL + "addEmail?email="+email, {
+            var tokenString = "&token="+this.$store.getters["auth/dispToken"];
+            var tokenURL = this.$config.apiURL+"addEmail?" + "email="+email+tokenString;
+            console.log("EmailURL:"+tokenString);
+            await this.$axios.get(tokenURL, {
                 headers: { "content-type": "application/x-www-form-urlencoded" }
             })
                 .then((response) => {
@@ -94,6 +102,9 @@ export default{
                     }
                 })
                 .catch((error) => {
+                    if (error.response.status == 403) {
+                        this.$router.push('/login');
+                    }
                     if (error.response) {
                         console.log(error.response.data);
                         console.log(error.response.status);

@@ -22,7 +22,8 @@ export default {
   },
   methods: {
     LoadTableData: async function(){
-      await this.$axios.get(this.$config.apiURL +"get_inventory",{
+      var token = this.$store.getters["auth/dispToken"];
+      await this.$axios.get(this.$config.apiURL +"get_inventory?token="+token,{
         headers:{"content-type":"application/x-www-form-urlencoded"}
       })
       .then((response)=>{
@@ -37,6 +38,7 @@ export default {
         this.items = this.$store.getters["table/getTableData"];
       })
       .catch((error)=>{
+        this.$router.push('/login');
         if (error.response)
         {
           console.log(error.response.data);

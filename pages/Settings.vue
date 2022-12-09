@@ -33,7 +33,9 @@ export default{
 
         callGetEmailList: async function(){
 
-            await this.$axios.get(this.$config.apiURL + "getEmailList", {
+            var tokenString = "?token="+this.$store.getters["auth/dispToken"];
+            var apiURL = this.$config.apiURL + "getEmailList"+tokenString;
+            await this.$axios.get(apiURL, {
                 headers: { "content-type": "application/x-www-form-urlencoded" }
             })
                 .then((response) => {
@@ -42,6 +44,10 @@ export default{
                     });
                 })
                 .catch((error) => {
+                    if (error.response.status == 403)
+                    {
+                        this.$router.push('/login');
+                    }
                     if (error.response) {
                         console.log(error.response.data);
                         console.log(error.response.status);

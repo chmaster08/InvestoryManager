@@ -79,10 +79,11 @@ export default{
         },
         changepass : async function(){
             this.attemptChange = true;
+            var tokenString = "&token="+this.$store.getters["auth/dispToken"];
             var oldpassString = "oldpass="+this.prevPassword;
             var newpassString = "newpass="+this.newPassword;
             console.log(oldpassString)
-      await this.$axios.get(this.$config.apiURL +"changepassword?" + oldpassString+"&"+newpassString,{
+      await this.$axios.get(this.$config.apiURL +"changepassword?" + oldpassString+"&"+newpassString+tokenString,{
         headers:{"content-type":"application/x-www-form-urlencoded"}
       })
       .then((response)=>{
@@ -97,6 +98,9 @@ export default{
 
       })
       .catch((error)=>{
+          if (error.response.status == 403) {
+              this.$router.push('/login');
+          }
         if (error.response)
         {
           console.log(error.response.data);
