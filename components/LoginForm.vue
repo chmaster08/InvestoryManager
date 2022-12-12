@@ -3,10 +3,10 @@
         <v-card width="500px" class="mt-10 pa-5">
             <v-card-title class="headline justify-center text-primary">Login</v-card-title>
             <v-card-text class="justify-center">
-                <PasswordField :password.sync="password"/>
+                <PasswordField :password.sync="password" :error="IsInvalid"/>
             </v-card-text>
             <v-card-actions class="justify-center">
-                <v-btn @click="submit" width="150px" height="50px">Login</v-btn>
+                <v-btn @click="submit" width="150px" height="50px" :loading="loading">Login</v-btn>
             </v-card-actions>
         </v-card>
     </v-form>
@@ -23,14 +23,17 @@ export default {
             prvkey:"",
             token:"",
             IsInvalid : false,
+            loading:false,
         };
     },
     methods: {
         submit  : async function(){
             if (this.password.length > 0)
             {
+              this.loading = true;
                 await this.login();
                 console.log(this.token);
+              this.loading = false;
                 if (this.token.length > 0)
                 {
                     this.$store.commit("auth/setToken", this.token);
@@ -108,6 +111,7 @@ export default {
                 })
                 .catch((error)=>
                 {
+                  this.IsInvalid = true;
                     if(error.response)
                     {
                         console.log(error.response.data);

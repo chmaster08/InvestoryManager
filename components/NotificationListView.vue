@@ -7,8 +7,11 @@
                     <EmailField :email.sync="email"/>
                 </v-col>
                 <v-col class="d-flex align-center">
-                    <v-btn color="primary" @click="AddEmail">Add</v-btn>
+                    <v-btn color="primary" @click="AddEmail">追加</v-btn>
                 </v-col>
+            </v-row>
+            <v-row v-if="InValidEmailInput" justify="center" class="my-auto mr-15">
+                <p>不正なメールアドレスです</p>
             </v-row>
             <v-row class="justify-center">
             <v-list>
@@ -44,6 +47,7 @@ export default{
     data(){
         return {
             email : "",
+            InValidEmailInput : false,
         };
     },
 
@@ -76,7 +80,7 @@ export default{
                 })
                 .catch((error) => {
                     if (error.response.status == 403) {
-                        this.$router.push('/login');
+                        this.$router.push('/logout');
                     }
                     if (error.response) {
                         console.log(error.response.data);
@@ -89,6 +93,13 @@ export default{
         },
         callAddEmailAPI : async function(email)
         {
+            if (!this.ValidateEmail())
+            {
+                this.InValidEmailInput = true;
+                return;
+            }
+
+            this.InValidEmailInput = false;
             var tokenString = "&token="+this.$store.getters["auth/dispToken"];
             var tokenURL = this.$config.apiURL+"addEmail?" + "email="+email+tokenString;
             console.log("EmailURL:"+tokenString);
@@ -103,7 +114,7 @@ export default{
                 })
                 .catch((error) => {
                     if (error.response.status == 403) {
-                        this.$router.push('/login');
+                        this.$router.push('/logout');
                     }
                     if (error.response) {
                         console.log(error.response.data);
@@ -114,6 +125,20 @@ export default{
                 });
 
         },
+
+        ValidateEmail()
+        {
+            var pattern = /^[A-Za-z0-9]{1}[A-Za-z0-9_.-]*@{1}[A-Za-z0-9_.-]+.[A-Za-z0-9]+$/;
+            if (pattern.test(this.email))
+            {
+                return true;
+            }
+            else
+            {
+                false;
+            }
+
+        }
     },
 }
 </script>

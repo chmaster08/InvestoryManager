@@ -16,7 +16,7 @@
                     <PasswordField :password.sync="newPassword" :show="true"/>
                 </v-row>
                 <v-row justify="center" class="mb-10">
-                    <v-btn color="primary" @click="submit">変更</v-btn>
+                    <v-btn color="#0D47A1" @click="submit">変更</v-btn>
                 </v-row>
                 <v-row justify="center" class="mb-10" v-show="this.showText">
                     <p>{{this.resultText}}</p>
@@ -99,7 +99,7 @@ export default{
       })
       .catch((error)=>{
           if (error.response.status == 403) {
-              this.$router.push('/login');
+              this.$router.push('/logout');
           }
         if (error.response)
         {

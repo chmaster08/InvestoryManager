@@ -17,5 +17,13 @@ export default{
             require:true,
         },
     },
+    data(){
+        return {
+      rules: [
+        v => !!v || '',
+        v => /.+@.+\..+/.test(v) || ''
+      ]
+    }
+    }
 }
 </script>

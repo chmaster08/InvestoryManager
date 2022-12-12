@@ -4,6 +4,7 @@
     :append-icon = "show ? 'mdi-eye' : 'mdi-eye-off'"
      :value="password"
      :type="show ? 'text' : 'password'"
+     :error = "error"
      counter
      @click:append="show = !show"
       label="Password"
@@ -21,9 +22,9 @@ export default {
             type : Boolean,
             default:false,
         },
-        valid:{
+        error:{
             type:Boolean,
-            default:true,
+            default:false,
         }
     },
 };
