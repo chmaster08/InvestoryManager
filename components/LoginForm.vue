@@ -101,7 +101,6 @@ export default {
                     {
                         console.log(response.data.body);
                         this.token = response.data.body;
-                        this.$cookies.set("token",this.token);
                     }
                     else
                     {
