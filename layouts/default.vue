@@ -34,6 +34,7 @@
       <v-spacer />
       <v-toolbar-title v-text="title" class="flex text-center" />
       <v-spacer />
+      <v-btn color="error" to="/logout">logout</v-btn>
     </v-app-bar>
     <v-main>
       <v-container>
@@ -41,7 +42,6 @@
       </v-container>
     </v-main>
     <v-footer
-      :absolute="!fixed"
       app
     >
       <span>&copy; Team Kansai A</span>

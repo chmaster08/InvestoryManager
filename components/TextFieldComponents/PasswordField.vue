@@ -8,6 +8,7 @@
      counter
      @click:append="show = !show"
       label="Password"
+      @keydown.enter.prevent="callLogin"
       @input="$emit('update:password',$event)"></v-text-field>
 </template>
 <script>
@@ -27,5 +28,10 @@ export default {
             default:false,
         }
     },
+    methods:{
+        callLogin(){
+            this.$emit('callLogin');
+        }
+    }
 };
 </script>

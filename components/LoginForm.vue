@@ -3,10 +3,10 @@
         <v-card width="500px" class="mt-10 pa-5">
             <v-card-title class="headline justify-center text-primary">Login</v-card-title>
             <v-card-text class="justify-center">
-                <PasswordField :password.sync="password" :error="IsInvalid"/>
+                <PasswordField :password.sync="password" :error="IsInvalid" v-on:callLogin="submit"/>
             </v-card-text>
             <v-card-actions class="justify-center">
-                <v-btn @click="submit" width="150px" height="50px" :loading="loading">Login</v-btn>
+                <v-btn @click="submit" width="150px" height="50px" :loading="loading" :color="btnColor">Login</v-btn>
             </v-card-actions>
         </v-card>
     </v-form>
@@ -25,6 +25,18 @@ export default {
             IsInvalid : false,
             loading:false,
         };
+    },
+    computed:{
+      btnColor(){
+        if (this.password.length > 0)
+        {
+          return "primary";
+        }
+        else
+        {
+          return "";
+        }
+      } 
     },
     methods: {
         submit  : async function(){
