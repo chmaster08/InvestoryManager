@@ -28,6 +28,7 @@ export default{
     },
     methods:{
         savethreshold(){
+            this.updateThreshold();
             console.log(this.threshold); 
         },
 
@@ -55,11 +56,59 @@ export default{
                         console.log(error.response.headers);
                     }
                 });
+        },
+
+        updateThreshold : async function(){
+            var thresholdstring = "threshold="+this.threshold;
+            var tokenString = "token="+this.$store.getters["auth/dispToken"];
+      await this.$axios.get(this.$config.apiURL +"setThreshold?" + thresholdstring+"&"+tokenString,{
+        headers:{"content-type":"application/x-www-form-urlencoded"}
+      })
+      .then((response)=>{
+
+      })
+      .catch((error)=>{
+          if (error.response.status == 403) {
+              this.$router.push('/logout');
+          }
+        if (error.response)
+        {
+          console.log(error.response.data);
+          console.log(error.response.status);
+          console.log(error.response.statusText);
+          console.log(error.response.headers);
         }
+      });
+        },
+        getThreshold : async function(){
+            var tokenString = "token="+this.$store.getters["auth/dispToken"];
+      await this.$axios.get(this.$config.apiURL +"getThreshold?" +tokenString,{
+        headers:{"content-type":"application/x-www-form-urlencoded"}
+      })
+      .then((response)=>{
+        this.threshold = response.data.body;
+        console.log(response.data.body);
+      })
+      .catch((error)=>{
+          if (error.response.status == 403) {
+              this.$router.push('/logout');
+          }
+        if (error.response)
+        {
+          console.log(error.response.data);
+          console.log(error.response.status);
+          console.log(error.response.statusText);
+          console.log(error.response.headers);
+        }
+      });
+        },
+
+
     },
     created(){
         console.log("created");
         this.callGetEmailList();
+        this.getThreshold();
     }
 }
 </script>
