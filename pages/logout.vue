@@ -28,7 +28,7 @@ export default{
   methods:{
     clearCookies()
     {
-
+      console.log('clear token');  
       this.$cookies.set('ACCESS_TOKEN', "");
     }
   }
