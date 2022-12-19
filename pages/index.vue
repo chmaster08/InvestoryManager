@@ -40,11 +40,11 @@ export default {
         this.items = this.$store.getters["table/getTableData"];
       })
       .catch((error)=>{
-        if (error.response.status == 403) {
-          this.$router.push('/logout');
-        }
         if (error.response)
         {
+          if (error.response.status == 403) {
+            this.$router.push('/logout');
+          }
           console.log(error.response.data);
           console.log(error.response.status);
           console.log(error.response.statusText);

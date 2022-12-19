@@ -79,10 +79,10 @@ export default{
                     }
                 })
                 .catch((error) => {
+                    if (error.response) {
                     if (error.response.status == 403) {
                         this.$router.push('/logout');
                     }
-                    if (error.response) {
                         console.log(error.response.data);
                         console.log(error.response.status);
                         console.log(error.response.statusText);

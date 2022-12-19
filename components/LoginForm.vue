@@ -4,6 +4,7 @@
             <v-card-title class="headline justify-center text-primary">Login</v-card-title>
             <v-card-text class="justify-center">
                 <PasswordField :password.sync="password" :error="IsInvalid" v-on:callLogin="submit"/>
+                <p v-if="IsInvalid">{{ this.errortext }}</p>
             </v-card-text>
             <v-card-actions class="justify-center">
                 <v-btn @click="submit" width="150px" height="50px" :loading="loading" :color="btnColor">Login</v-btn>
@@ -24,6 +25,7 @@ export default {
             token:"",
             IsInvalid : false,
             loading:false,
+            errortext:"",
         };
     },
     computed:{
@@ -112,6 +114,8 @@ export default {
                     if (response.status == 200)
                     {
                         console.log(response.data.body);
+                        this.errortext = "";
+                        this.IsInvalid = false;
                         this.token = response.data.body;
                     }
                     else
@@ -123,13 +127,23 @@ export default {
                 .catch((error)=>
                 {
                   this.IsInvalid = true;
+                  console.log(error);
                     if(error.response)
                     {
                         console.log(error.response.data);
                         console.log(error.response.status);
                         console.log(error.response.statusText);
                         console.log(error.response.headers);
+                        if (error.response.status == 403)
+                        {
+                          this.errortext = "パスワードが異なります";
+                        }
 
+                    }
+
+                    if (this.errortext.length == 0)
+                    {
+                      this.errortext = "タイムアウトしました。";
                     }
                     return null;
                 })

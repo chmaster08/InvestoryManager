@@ -6,17 +6,21 @@
         <v-row dense class="my-5" justify="center">
             <Threshold :threshold.sync="threshold" @savethreshold="savethreshold"/>
         </v-row>
-        <v-row justify="center">
+        <v-row justify="center" class="my-5">
             <PasswordChange :prevPassword="currentPass" :newPassword="newPass"/>
+        </v-row>
+        <v-row justify="center"> 
+            <Debug></Debug>
         </v-row>
     </v-container>
 </template>
 <script>
+import Debug from '../components/Debug.vue';
 import NotificationListViewVue from '../components/NotificationListView.vue';
 import PasswordChange from '../components/PasswordChange.vue';
 import Threshold from '../components/Threshold.vue';
 export default{
-    components :{ NotificationListViewVue, Threshold, PasswordChange },
+    components :{ NotificationListViewVue, Threshold, PasswordChange, Debug },
 
     data(){
         return{
@@ -45,11 +49,10 @@ export default{
                     });
                 })
                 .catch((error) => {
-                    if (error.response.status == 403)
-                    {
-                        this.$router.push('/login');
-                    }
                     if (error.response) {
+                        if (error.response.status == 403) {
+                            this.$router.push('/login');
+                        }
                         console.log(error.response.data);
                         console.log(error.response.status);
                         console.log(error.response.statusText);
@@ -68,11 +71,11 @@ export default{
 
       })
       .catch((error)=>{
+        if (error.response)
+        {
           if (error.response.status == 403) {
               this.$router.push('/logout');
           }
-        if (error.response)
-        {
           console.log(error.response.data);
           console.log(error.response.status);
           console.log(error.response.statusText);
@@ -90,11 +93,11 @@ export default{
         console.log(response.data.body);
       })
       .catch((error)=>{
-          if (error.response.status == 403) {
-              this.$router.push('/logout');
-          }
         if (error.response)
         {
+            if (error.response.status == 403) {
+                this.$router.push('/logout');
+            }
           console.log(error.response.data);
           console.log(error.response.status);
           console.log(error.response.statusText);
