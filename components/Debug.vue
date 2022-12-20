@@ -15,14 +15,11 @@ export default{
         resetZero: async function(){
 
             var tokenString = "token="+this.$store.getters["auth/dispToken"];
-            var apiURL = this.$config.apiURL + "ResetZero" +tokenString;
+            var apiURL = this.$config.apiURL + "reset_base_gram" +tokenString;
             await this.$axios.get(apiURL, {
                 headers: { "content-type": "application/x-www-form-urlencoded" }
             })
                 .then((response) => {
-                    response.data.body.forEach(element => {
-                        this.emailList.push(element);
-                    });
                 })
                 .catch((error) => {
                     if (error.response) {
